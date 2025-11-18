@@ -10,6 +10,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   //Property
+  final int _minDanNum = 2;
+  final int _maxDanNum = 9;
+  final int _minMultiNum = 1;
+  final int _maxMultiNum = 9;
   //late 는 초기화를 나중으로 미룸
   late List<int> _danNumList; //구구단 번호 리스트
   late int _selectedItem;    //선택된 아이템 인덱스
@@ -18,7 +22,7 @@ class _HomeState extends State<Home> {
   void initState() { //페이지가 새로 생성 될때 무조건 1번 사용 됨
     super.initState();
 
-    _danNumList = List.generate(8, (index) => index + 2);
+    _danNumList = List.generate(_maxDanNum-1, (index) => index + _minDanNum);
     _selectedItem = 0;
   }
   
@@ -73,11 +77,13 @@ class _HomeState extends State<Home> {
                 color: Colors.grey[300],
                 width: 200,
                 height: 250,
-                child: Column(
-                  children: [
-                    SizedBox(height: 20),
-                    _returnCenterTextWidgetGugudan(_danNumList[_selectedItem]),
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20),
+                      _returnCenterTextWidgetGugudan(_danNumList[_selectedItem]),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -90,9 +96,9 @@ class _HomeState extends State<Home> {
   //--------Functions ------------
   Center _returnCenterTextWidgetGugudan(int danNum){ //구구단 Text위젯 출력 함수
     String result = '';
-    for(int i=1; i<=9; i++){
+    for(int i=_minMultiNum; i<=_maxMultiNum; i++){
       // print('$danNum x $i = ${danNum * i}');
-      result += i!=9 ?'$danNum x $i = ${danNum * i}\n' : '$danNum x $i = ${danNum * i}';
+      result += i!=_maxMultiNum ?'$danNum x $i = ${danNum * i}\n' : '$danNum x $i = ${danNum * i}';
     }
     return Center(
       child: Text(
